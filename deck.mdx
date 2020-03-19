@@ -1,0 +1,184 @@
+import { themes } from 'mdx-deck'
+export const theme = {
+  ...themes.future,
+  colors: {
+    text: '#1e2347',
+    background: "#ebecf5",
+    code: {
+      backgroundColor: '#ff0000'
+    }
+  },
+}
+
+import logo from './img/fission.svg'
+
+# Cryptography, Keys, & Auth
+
+Daniel Holmgren - Software Engineer at Fission
+
+<img src={logo} style={{height: '64px', marginBottom: '32px'}}/>
+
+---
+
+import fingerprint from './img/fingerprint.png'
+
+# Crypto Building Blocks
+
+### Hashes
+<img src={fingerprint} style={{height:'48px'}} />
+
+### Symmetric keys
+### 🔑
+
+### Asymmetric keypairs 
+### 🔑🗝
+
+---
+
+# Hashes 
+<img src={fingerprint} style={{height:'64px'}} />
+
+**"Digital Fingerprint"**
+
+Any function that maps arbitrarily large data to a fixed size
+
+Good functions are **uniformly distributed** and have **few collisions** (two items that map to the same value)
+
+--- 
+# Symmetric Keys 
+## 🔑
+
+Use a **key** is just arbitrary data that is kept secret (usually 128/256 bits)
+
+Use a key to **encrypt** or **decrypt** a piece of data
+- `text + key = cipher`
+- `cipher + key = text`
+
+<small>(Plus some <a href="https://proandroiddev.com/security-best-practices-symmetric-encryption-with-aes-in-java-7616beaaade9">extra complexity around initilization vectors</a>)</small>
+
+Common algorithms: **AES**, Salsa20, TripleSec
+
+---
+# Asymmetric keypairs 
+## 🔑🗝
+
+### Private Key
+- Must be kept **very secure**
+
+### Public Key
+- Derived from the private key
+- Shared widely
+
+---
+# Asymmetric keypairs 
+## 🔑🗝
+
+### Digital Signatures
+- Attached to a msg to prove that it was **created by the owner** of a private key and it **hasn't been altered**
+- Can only be **created** if you know a given **private key** & the **hash of some data**
+- Can be **verified** with the **public key** & the **hash of the data** 
+
+### Key Exchange
+- Exchange a symmetric key between two keypairs
+- Leaks no information about the key or either keypair to the outside world
+
+---
+# Asymmetric keypairs 
+## 🔑🗝
+
+### RSA
+- One of the first asymmetric cryptosystems
+- Still widely used
+- Based on **prime-factorization** of very large numbers
+- Secure keys are **2048-4096 bits**
+
+### ECC
+- Relatively new cryptosystem
+- Based on **point addition** on an elliptic curve
+- Secure keys are **256 bits**
+
+---
+
+# Cool Tools & Browser APIs
+### WebCrypto 🔐
+
+### IndexedDB 💻
+
+### WebAuthn 🕵 
+
+### Macaroons 🍪
+
+
+---
+# WebCrypto 🔐
+Browser API for creating & using keys
+
+Offers **RSA**, **AES**, and **ECC** (only NIST curves)
+
+Supported by all **modern browsers**
+
+--- 
+import KeyStore from './Keystore'
+
+# WebCrypto 💜 IndexedDB
+
+https://github.com/fission-suite/keystore-idb
+
+<KeyStore />
+
+
+---
+import Webauthn from './Webauthn'
+
+## WebAuthn 🕵
+
+**Cryptographic authentication** in the browser
+
+Creates a **U2F token** which is used by things like Yubikey and biometrics (fingerprints, etc)
+
+Only for **authentication** not authorization, signing arbitrary data, or key exchange
+
+**"Challenge"-based flow**
+
+<Webauthn />
+
+For more usability research: https://talk.fission.codes/t/webauthn-usability-research/461
+
+---
+
+# Macaroons 🍪
+
+Similar to Bearer tokens like JWTs
+
+A **set of permissions** with a **signature** from a trusted authority
+
+But someone with permissions can sign an additional token with some **subset of those permissions**
+
+When proving auth, you pass the **entire chain of tokens**
+
+**Hence, Macaroons or "Stacked Cookies"** 😜
+
+Relevant Tweetstorm: https://twitter.com/FISSIONcodes/status/1237785082485788673
+
+---
+
+# Putting it all together
+
+You have a **root key** with **full permissions** for your file system
+
+You can **delegate any subset** of those permissions (including all of them!) to other keys
+
+**Read** permissions through **key exchange**
+
+**Write** permissions through **signed macaroons**
+
+No need for access control lists!
+
+
+---
+
+# Thanks for joining in!
+
+# Any questions?
+
+<img src={logo} style={{height: '96px'}} />
