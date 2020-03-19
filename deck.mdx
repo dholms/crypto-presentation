@@ -40,9 +40,11 @@ import fingerprint from './img/fingerprint.png'
 
 **"Digital Fingerprint"**
 
-Any function that maps arbitrarily large data to a fixed size
+Any function that maps arbitrarily large data to a fixed size (usually 128/256/512 bits)
 
 Good functions are **uniformly distributed** and have **few collisions** (two items that map to the same value)
+
+Common algorithms: SHA-2, SHA-3, KECCAK
 
 --- 
 # Symmetric Keys 
@@ -111,9 +113,9 @@ Common algorithms: **AES**, Salsa20, TripleSec
 
 ---
 # WebCrypto 🔐
-Browser API for creating & using keys
+Browser API for creating keys & using cryptographic functions
 
-Offers **RSA**, **AES**, and **ECC** (only NIST curves)
+Offers **SHA**, **AES**, **RSA**, and **ECC** (only NIST curves)
 
 Supported by all **modern browsers**
 
@@ -152,7 +154,7 @@ Similar to Bearer tokens like JWTs
 
 A **set of permissions** with a **signature** from a trusted authority
 
-But someone with permissions can sign an additional token with some **subset of those permissions**
+But a token-holder can sign an additional token with some **subset of their permissions**
 
 When proving auth, you pass the **entire chain of tokens**
 

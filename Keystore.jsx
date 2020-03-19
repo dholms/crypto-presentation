@@ -18,6 +18,7 @@ class KeyStore extends React.Component {
   }
 
   handleChange = async (evt) => {
+    evt.preventDefault()
     const text = evt.target.value
     const signature = await this.state.ks.sign(text)
     this.setState({ text, signature })
