@@ -41,7 +41,7 @@ class KeyStore extends React.Component {
           fontSize: 16
         }}>
           <h5>Public Key</h5>
-          publicKey: { this.state.publicKey }
+          { this.state.publicKey }
 
           <h5>Text</h5>
           <input type='text' onChange={this.handleChange} value={this.state.text}></input>
